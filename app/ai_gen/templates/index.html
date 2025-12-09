@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Home - BD Project{% endblock %}
+
+{% block content %}
+<h1>Database Project</h1>
+<p>Welcome to our project website.</p>
+
+<h2>Available Queries</h2>
+<ul>
+    <li><a href="{{ url_for('query1') }}">Query 1</a></li>
+    <li><a href="{{ url_for('query2') }}">Query 2</a></li>
+</ul>
+{% endblock %}
