@@ -3,25 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}BD Project{% endblock %}</title>
+
+    <!-- (Opcional) Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="{{ url_for('index') }}">Home</a> |
-            <a href="{{ url_for('query1') }}">Query 1</a> |
-            <a href="{{ url_for('query2') }}">Query 2</a>
-        </nav>
-        <hr>
-    </header>
+    <div class="page">
+        <header class="header">
+            <nav class="navbar">
+                <div class="logo">BD Project</div>
+                <div class="nav-links">
+                    <a href="{{ url_for('index') }}">Home</a>
+                    <a href="{{ url_for('query1') }}">Query 1</a>
+                    <a href="{{ url_for('query2') }}">Query 2</a>
+                    <a href="{{ url_for('query3') }}">Query 3</a>
+                    <a href="{{ url_for('query4') }}">Query 4</a>
+                </div>
+            </nav>
+        </header>
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+        <main class="content">
+            <div class="card">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
 
-    <footer>
-        <hr>
-        <p>Database Project – CC2005</p>
-    </footer>
+        <footer class="footer">
+            <p>Database Project – CC2005</p>
+        </footer>
+    </div>
 </body>
 </html>
