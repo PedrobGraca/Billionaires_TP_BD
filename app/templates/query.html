@@ -1,31 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %}{{ title }} - BD Project{% endblock %}
+{% block title %}Queries · Billionaires Database{% endblock %}
 
 {% block content %}
-<h1>{{ title }}</h1>
-<p>{{ description }}</p>
-
-{% if results %}
-<table border="1" cellpadding="5" cellspacing="0">
-    <thead>
-        <tr>
-            {% for col in columns %}
-                <th>{{ col }}</th>
-            {% endfor %}
-        </tr>
-    </thead>
-    <tbody>
-        {% for row in results %}
-        <tr>
-            {% for cell in row %}
-                <td>{{ cell }}</td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% else %}
-<p>No results available.</p>
-{% endif %}
+<section class="section">
+    <h2>Queries</h2>
+    <p>
+        This page is reserved for future query results or more advanced search
+        tools. For now it is just a placeholder.
+    </p>
+    <p>
+        You can create new routes in <code>app.py</code> and new templates
+        based on <code>base.html</code> to show tables, charts or detailed
+        information from the database.
+    </p>
+</section>
 {% endblock %}

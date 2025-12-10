@@ -1,14 +1,98 @@
 {% extends "base.html" %}
 
-{% block title %}Home - BD Project{% endblock %}
+{% block title %}Home · Billionaires Database{% endblock %}
 
 {% block content %}
-<h1>Database Project</h1>
-<p>Welcome to our project website.</p>
 
-<h2>Available Queries</h2>
-<ul>
-    <li><a href="{{ url_for('query1') }}">Query 1</a></li>
-    <li><a href="{{ url_for('query2') }}">Query 2</a></li>
-</ul>
+<section class="section" id="about">
+    <h2>About</h2>
+    <p>
+        This page provides an overview of a fictional database of billionaires.
+        It is focused on the visual structure only: all numbers and results
+        are placeholders that can later be replaced with real data from an SQLite
+        database.
+    </p>
+    <p>
+        The layout is intentionally simple and easy to extend. You can add new
+        sections, search tools or statistics without changing the overall structure.
+    </p>
+</section>
+
+<section class="section" id="stats">
+    <h2>Some Database Statistics</h2>
+
+    <table class="stats-table">
+        <thead>
+        <tr>
+            <th>Items</th>
+            <th>Count</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Billionaires</td>
+            <td>2589</td>
+        </tr>
+        <tr>
+            <td>Industries</td>
+            <td>1037</td>
+        </tr>
+        <tr>
+            <td>Countries</td>
+            <td>78</td>
+        </tr>
+        <tr>
+            <td>Continents</td>
+            <td>6</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="section" id="search-tools">
+    <h2>Search Tools</h2>
+
+    <!-- Busca por nome -->
+    <div class="search-block">
+        <label for="search-name">Search by name</label>
+        <div class="search-row">
+            <input id="search-name" type="text" placeholder="Enter a name...">
+            <button type="button" class="btn">Search</button>
+        </div>
+        <a href="#" class="link-small">List all by name</a>
+    </div>
+
+    <!-- Busca por ID -->
+    <div class="search-block">
+        <label for="search-id">Search by ID</label>
+        <div class="search-row">
+            <input id="search-id" type="text" placeholder="Enter a billionaire's ID...">
+            <button type="button" class="btn">Search</button>
+        </div>
+        <a href="#" class="link-small">List all by ID</a>
+    </div>
+
+    <!-- Busca por país -->
+    <div class="search-block">
+        <label for="search-country">Search by country</label>
+        <div class="search-row">
+            <input id="search-country" type="text" placeholder="Enter a country's name...">
+            <button type="button" class="btn">Search</button>
+        </div>
+        <a href="#" class="link-small">List by number of billionaires</a>
+    </div>
+</section>
+
+<section class="section" id="explore-industries">
+    <h2>Explore Industries</h2>
+    <p>
+        Each billionaire is associated with one or more industries. This section
+        can later be connected to a query that shows the industries with the
+        highest number of billionaires or the greatest total wealth.
+    </p>
+    <button type="button" class="btn btn-secondary">
+        Industries by wealth
+    </button>
+</section>
+
 {% endblock %}
