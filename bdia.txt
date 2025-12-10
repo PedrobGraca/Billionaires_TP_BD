@@ -1,0 +1,33 @@
+BILLIONAIRE(
+  b_id,
+  position,
+  wealth,
+  full_name,last_name, first_name?,
+  { source },
+  industry,
+  .age.,
+  gender,
+ birth_year?, birth_month?, birth_day? 
+)
+
+COUNTRY(
+  c_id,
+  country_name,
+  cpi?,
+  cpi_change?,
+  gdp?,
+  g_tertiary_ed_enroll?,
+  g_primary_ed_enroll?,
+  life_expectancy?,
+  tax_revenue?,
+  tax_rate?,
+  pop?,
+  lat?,
+  long?
+)
+
+
+
+BILLIONAIRE === N === < CITIZENSHIP_OF > --- 1 --- COUNTRY
+
+BILLIONAIRE --- N --- < RESIDES_IN( city_of_residence?, residence_state?, residence_region? ) > --- 1 --- COUNTRY
