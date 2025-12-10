@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Billionaires</h1>
+<table border="1">
+  <tr>
+    <th>Rank</th>
+    <th>Name</th>
+    <th>Wealth ($)</th>
+    <th>Industry</th>
+  </tr>
+  {% for b in billionaires %}
+  <tr>
+    <td>{{ b.position }}</td>
+    <td><a href="/billionaires/{{ b.b_id }}/">{{ b.full_name }}</a></td>
+    <td>{{ b.wealth }}</td>
+    <td><a href="/industries/{{ b.industry }}/">{{ b.industry }}</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

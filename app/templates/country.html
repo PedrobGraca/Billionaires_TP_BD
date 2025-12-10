@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ country.country_name }}</h1>
+<ul>
+    <li><strong>Population:</strong> {{ country.pop }}</li>
+    <li><strong>GDP:</strong> ${{ country.gdp }}</li>
+    <li><strong>Life Expectancy:</strong> {{ country.life_expectancy }} years</li>
+    <li><strong>Tax Rate:</strong> {{ country.tax_rate }}%</li>
+    <li><strong>Tax Revenue:</strong> {{ country.tax_revenue }}%</li>
+</ul>
+
+<h2>Billionaires (Citizens)</h2>
+<table border="1">
+    <tr>
+        <th>Rank</th>
+        <th>Name</th>
+        <th>Wealth</th>
+    </tr>
+    {% for b in citizens %}
+    <tr>
+        <td>{{ b.position }}</td>
+        <td><a href="/billionaires/{{ b.b_id }}/">{{ b.full_name }}</a></td>
+        <td>{{ b.wealth }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

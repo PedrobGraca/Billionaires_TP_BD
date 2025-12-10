@@ -1,17 +1,12 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-<!-- 
-  Conteúdo apenas simples para começar. 
- 
-  Veja aplicação fazendo interface à MovieStream para exemplos concretos.
--->
-
-<h1>{{ message }}</h1>
-
-<h2> ... and hello again</h2>
-
-This is the entry page for the application!
-
+<h1>Billionaires Database</h1>
+<p>
+  Welcome to the Billionaires Database. Currently tracking <strong>{{ stats.n_billionaires }}</strong> billionaires across <strong>{{ stats.n_countries }}</strong> countries.
+</p>
+<ul>
+    <li><a href="/billionaires/">Browse Billionaires</a></li>
+    <li><a href="/countries/">Browse Countries</a></li>
+    <li><a href="/industries/">Browse Industries</a></li>
+</ul>
 {% endblock %}

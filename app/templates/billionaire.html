@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ billionaire.full_name }} (Rank: {{ billionaire.position }})</h1>
+
+<p><strong>Net Worth:</strong> ${{ billionaire.wealth }}</p>
+<p><strong>Industry:</strong> <a href="/industries/{{ billionaire.industry }}/">{{ billionaire.industry }}</a></p>
+<p><strong>Gender:</strong> {{ billionaire.gender }}</p>
+<p><strong>Age:</strong> {% if billionaire.birth_year %} approx. {{ 2024 - billionaire.birth_year|int }} (Born {{ billionaire.birth_year|int }}) {% else %} N/A {% endif %}</p>
+
+<h2>Location</h2>
+<ul>
+    <li><strong>Citizenship:</strong> <a href="/countries/{{ billionaire.country_of_citizenship }}/">{{ billionaire.citizenship_country }}</a></li>
+    <li><strong>Residence:</strong> <a href="/countries/{{ billionaire.country_of_residence }}/">{{ billionaire.residence_country }}</a> 
+        {% if billionaire.city_of_residence %}({{ billionaire.city_of_residence }}){% endif %}
+    </li>
+</ul>
+
+<h2>Sources of Wealth</h2>
+<ul>
+  {% for s in sources %}
+  <li>{{ s.source }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

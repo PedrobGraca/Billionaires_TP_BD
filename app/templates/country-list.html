@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Countries</h1>
+<table border="1">
+  <tr>
+    <th>Country</th>
+    <th>Population</th>
+    <th>GDP ($)</th>
+  </tr>
+  {% for c in countries %}
+  <tr>
+    <td><a href="/countries/{{ c.c_id }}/">{{ c.country_name }}</a></td>
+    <td>{{ c.pop }}</td>
+    <td>{{ c.gdp }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
