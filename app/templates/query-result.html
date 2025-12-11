@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Report Result</h1>
+<h3>{{ title }}</h3>
+
+{% if rows %}
+    <table border="1" cellpadding="5" cellspacing="0">
+      <thead>
+        <tr>
+          {% for header in headers %}
+            <th>{{ header|replace('_', ' ')|title }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          {% for header in headers %}
+            <td>{{ row[header] }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% else %}
+    <p>No results found.</p>
+{% endif %}
+
+<p>
+    <a href="/queries/">Back to Reports</a>
+</p>
+{% endblock %}

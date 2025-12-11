@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Special Reports</h1>
+<ul>
+    {% for id, data in queries.items() %}
+    <li>
+        <a href="/queries/{{ id }}/">{{ data.question }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

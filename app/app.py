@@ -6,6 +6,112 @@ import db
 
 APP = Flask(__name__)
 
+# 10 different SQL queries
+QUERIES = {
+    1: {
+        'question': '1) Portuguese billionaires and their sources of wealth',
+        'sql': '''
+            SELECT full_name, position, wealth, industry, group_concat(source, ', ') as sources
+            FROM billionaires
+            JOIN countries ON c_id = country_of_citizenship
+            NATURAL JOIN sources
+            WHERE country_name LIKE 'Portugal'
+            GROUP BY b_id
+        '''
+    },
+    2: {
+        'question': '2) Wealth stats by gender for "Technology" industry',
+        'sql': '''
+            SELECT gender, count(*) as total, avg(wealth) as avg_wealth
+            FROM billionaires
+            WHERE industry = 'Technology'
+            GROUP BY gender
+            ORDER BY total DESC
+        '''
+    },
+    3: {
+        'question': '3) Billionaires listed as families (containing "&")',
+        'sql': '''
+            SELECT full_name, wealth, last_name, first_name
+            FROM billionaires
+            WHERE full_name LIKE '%&%'
+            ORDER BY position
+        '''
+    },
+    4: {
+        'question': '4) Industries with >100 billionaires and >1T total wealth',
+        'sql': '''
+            SELECT industry, count(*) as num, sum(wealth) as total
+            FROM billionaires
+            GROUP BY industry
+            HAVING num > 100 AND total > 1000000
+        '''
+    },
+    5: {
+        'question': '5) Billionaires living outside their country of citizenship',
+        'sql': '''
+            SELECT full_name, gender, cr.country_name as residence, cc.country_name as citizenship
+            FROM billionaires
+            JOIN countries cr ON cr.c_id = country_of_residence
+            JOIN countries cc ON cc.c_id = country_of_citizenship
+            WHERE country_of_residence != country_of_citizenship
+            ORDER BY gender, cr.c_id
+        '''
+    },
+    6: {
+        'question': '6) Countries with >10 billionaires and Life Expectancy >80',
+        'sql': '''
+            SELECT country_name, count(b_id) as n_billionaires, sum(wealth) total_wealth, life_expectancy
+            FROM billionaires 
+            JOIN countries ON c_id = country_of_residence
+            GROUP BY c_id
+            HAVING n_billionaires > 10 AND life_expectancy > 80
+            ORDER BY n_billionaires DESC
+        '''
+    },
+    7: {
+        'question': '7) Wealth stats by US residence region',
+        'sql': '''
+            SELECT residence_region, count(*) as n_billionaires, sum(wealth) as total_wealth, avg(wealth) as avg_wealth
+            FROM billionaires
+            WHERE residence_region IS NOT NULL
+            GROUP BY residence_region
+            ORDER BY total_wealth DESC
+        '''
+    },
+    8: {
+        'question': '8) Countries with no resident billionaires',
+        'sql': '''
+            SELECT country_name
+            FROM countries c
+            LEFT JOIN billionaires ON country_of_residence = c_id
+            WHERE b_id IS NULL
+            ORDER BY country_name
+        '''
+    },
+    9: {
+        'question': '9) Countries (>5 billionaires) with highest average billionaire wealth',
+        'sql': '''
+            SELECT country_name, avg(wealth) as avg_wealth, cpi
+            FROM billionaires
+            JOIN countries ON c_id = country_of_residence
+            GROUP BY country_name
+            HAVING count(b_id) > 5 AND cpi IS NOT NULL
+            ORDER BY avg_wealth DESC
+        '''
+    },
+    10: {
+        'question': '10) Birth decades and most common industries',
+        'sql': '''
+            SELECT (cast(birth_year as integer) / 10) * 10 as decade_birth, industry, count(*) n_billionaires
+            FROM billionaires
+            WHERE birth_year IS NOT NULL
+            GROUP BY decade_birth, industry
+            ORDER BY decade_birth DESC, n_billionaires DESC
+        '''
+    }
+}
+
 # Start page
 @APP.route('/')
 def index():
@@ -17,6 +123,7 @@ def index():
     JOIN
       (SELECT COUNT(*) n_countries FROM COUNTRIES)
     ''').fetchone()
+    # List top 10 billionaires by wealth
     logging.info(stats)
     return render_template('index.html', stats=stats)
 
@@ -127,3 +234,29 @@ def view_industry(name):
 
   return render_template('industry.html', 
            industry=name, billionaires=billionaires)
+
+# Queries page
+@APP.route('/queries/')
+def queries_list():
+    return render_template('queries.html', queries=QUERIES)
+
+# General function for the 10 queries
+@APP.route('/queries/<int:id>/')
+def execute_query(id):
+    if id not in QUERIES:
+        abort(404, 'Query not found')
+    
+    query_data = QUERIES[id]
+    cursor = db.execute(query_data['sql'])
+    rows = cursor.fetchall()
+    
+    # Extract column names from cursor description for the generic template
+    if cursor.description:
+        headers = [desc[0] for desc in cursor.description]
+    else:
+        headers = []
+
+    return render_template('query-result.html', 
+                           title=query_data['question'], 
+                           headers=headers, 
+                           rows=rows)
