@@ -124,8 +124,13 @@ def index():
       (SELECT COUNT(*) n_countries FROM COUNTRIES)
     ''').fetchone()
     # List top 10 billionaires by wealth
+    top10 = db.execute('''
+    SELECT b_id, position, wealth, full_name, industry, c_id, country_name
+    FROM BILLIONAIRES JOIN COUNTRIES ON (country_of_citizenship=c_id)
+    LIMIT 10
+                       ''')
     logging.info(stats)
-    return render_template('index.html', stats=stats)
+    return render_template('index.html', stats=stats, top10=top10)
 
 # Billionaires List
 @APP.route('/billionaires/')
