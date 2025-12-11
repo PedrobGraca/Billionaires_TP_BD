@@ -20,7 +20,7 @@ def connect():
 
 def execute(sql,args=None):
   global DB
-  sql = re.sub(r'\s+',' ', sql)
+  sql = re.sub('\s+',' ', sql)
   logging.info('SQL: {} Args: {}'.format(sql,args))
   return DB['cursor'].execute(sql, args) \
       if args != None else DB['cursor'].execute(sql)
