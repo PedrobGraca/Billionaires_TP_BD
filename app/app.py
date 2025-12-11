@@ -103,11 +103,19 @@ QUERIES = {
     10: {
         'question': '10) Birth decades and most common industries',
         'sql': '''
-            SELECT (cast(birth_year as integer) / 10) * 10 as decade_birth, industry, count(*) n_billionaires
-            FROM billionaires
-            WHERE birth_year IS NOT NULL
-            GROUP BY decade_birth, industry
-            ORDER BY decade_birth DESC, n_billionaires DESC
+            SELECT decade_birth, industry, n_billionaires
+            FROM (
+                SELECT 
+                  (cast(birth_year as integer) / 10) * 10 as decade_birth,
+                  industry,
+                  count(*) n_billionaires
+                FROM billionaires
+                WHERE birth_year is not null
+                GROUP BY decade_birth, industry
+            )
+            GROUP BY decade_birth
+            HAVING n_billionaires = max(n_billionaires)
+            ORDER BY decade_birth desc;
         '''
     }
 }
