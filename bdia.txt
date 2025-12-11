@@ -7,8 +7,9 @@ BILLIONAIRE(
   industry,
   .age.,
   gender,
- birth_year?, birth_month?, birth_day?,
-  country_of_residence?
+  birth_year?, birth_month?, birth_day?,
+  country_of_residence?,
+  country_of_citizenship
 )
 
 COUNTRY(
