@@ -10,8 +10,10 @@
 <h2>Location</h2>
 <ul>
     <li><strong>Citizenship:</strong> <a href="/countries/{{ billionaire.country_of_citizenship }}/">{{ billionaire.citizenship_country }}</a></li>
-    <li><strong>Residence:</strong> <a href="/countries/{{ billionaire.country_of_residence }}/">{{ billionaire.residence_country }}</a> 
-        {% if billionaire.city_of_residence %}({{ billionaire.city_of_residence }}){% endif %}
+    <li><strong>Residence:</strong> 
+      {% if billionaire.residence_region %}{{ billionaire.residence_region}}{% endif %}
+      <a href="/countries/{{ billionaire.country_of_residence }}/">{{ billionaire.residence_country }}</a> 
+      {% if billionaire.city_of_residence %}({{ billionaire.city_of_residence }}{% endif %}{% if billionaire.residence_state %}, {{ billionaire.residence_state }}{% endif %})
     </li>
 </ul>
 
