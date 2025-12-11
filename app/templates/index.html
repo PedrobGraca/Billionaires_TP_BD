@@ -11,7 +11,7 @@
     <li><a href="/queries/"><strong>Special Reports & SQL Queries</strong></a></li>
 </ul>
 <h2>Top 10 billionaires by wealth</h2>
-<p> The richest of the richest </p>
+<p>The richest of the richest</p>
 <table border="1">
   <tr>
     <th>Rank</th>
@@ -30,4 +30,12 @@
   </tr>
   {% endfor %}
 </table>
+<h2>Search billionaires by name</h2>
+</p>
+<p>Get billionaire info:
+<form name="bsearch" action="javascript:window.open('/billionaires/search/'+document.forms['bsearch'].elements['expr'].value,'_self')">
+   <input value="Joaquim Ferráz" required name="expr" id="expr"/>
+   <input type="submit" value="get"/>
+</form>
+</p>
 {% endblock %}
