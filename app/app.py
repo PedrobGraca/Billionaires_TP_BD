@@ -1,6 +1,6 @@
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
-from flask import render_template, Flask
+from flask import abort, render_template, Flask
 import logging
 import db
 
@@ -146,7 +146,7 @@ def list_billionaires():
     billionaires = db.execute('''
       SELECT b_id, full_name, wealth, industry, position
       FROM BILLIONAIRES
-      ORDER BY position ASC
+      ORDER BY position
     ''').fetchall()
     return render_template('billionaire-list.html', billionaires=billionaires)
 
